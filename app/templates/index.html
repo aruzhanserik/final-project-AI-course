@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Florant — plant care assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main>
+  <h1>🌿 Florant</h1>
+  <p class="lead">Upload a photo of your houseplant. Florant identifies it and writes care advice from trusted sources.</p>
+
+  {% if not has_gemini and not has_plantnet %}
+  <p class="warn">No API key found. Copy <code>.env.example</code> to <code>.env</code> and add your <code>GEMINI_API_KEY</code>, then restart.</p>
+  {% endif %}
+
+  <form id="form">
+    <label>Plant photo
+      <input type="file" name="photo" accept="image/*" required>
+    </label>
+    <img id="preview" alt="" hidden>
+    <label>Your situation (optional)
+      <textarea name="situation" rows="2" placeholder="e.g. north-facing window, I travel every other week, I have a cat"></textarea>
+    </label>
+    <button type="submit">Identify &amp; get advice</button>
+  </form>
+
+  <section id="status" hidden></section>
+  <section id="result" hidden></section>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
